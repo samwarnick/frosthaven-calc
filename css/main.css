@@ -1,8 +1,5 @@
-#costsTable thead th:first-child {
-    min-width: 250px;
-}
-#costsTable thead th:last-child {
-    width: 100%;
+#costsTable {
+    width: auto;
 }
 
 .enhancementIcon {
@@ -15,4 +12,5 @@
 .costCell {
     font-weight: bold;
     font-variant-numeric: tabular-nums;
+    text-align: right;
 }

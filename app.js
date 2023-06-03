@@ -247,6 +247,7 @@ function displayCosts(costs) {
     labelEl.textContent = label;
 
     const enhancementCell = document.createElement("th");
+    enhancementCell.setAttribute("scope", "row");
     enhancementCell.appendChild(iconEl);
     enhancementCell.appendChild(labelEl);
 
