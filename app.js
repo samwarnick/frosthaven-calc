@@ -1,95 +1,206 @@
-const enhancements = {
-  move: "Move",
-  attack: "Attack",
-  range: "Range",
-  target: "Target",
-  shield: "Shield",
-  retaliate: "Retaliate",
-  pierce: "Pierce",
-  heal: "Heal",
-  push: "Push",
-  pull: "Pull",
-  teleport: "Teleport",
-  summonHP: "Summon HP",
-  summonMove: "Summon Move",
-  summonAttack: "Summon Attack",
-  summonRange: "Summon Range",
-  regenerate: "Regenerate",
-  ward: "Ward",
-  strengthen: "Strengthen",
-  bless: "Bless",
-  wound: "Wound",
-  poison: "Poison",
-  immobilize: "Immobilize",
-  muddle: "Muddle",
-  curse: "Curse",
-  element: "Element",
-  wildElement: "Wild Element",
-  jump: "Jump",
-  areaHex: "Area-of-Effect Hex",
-};
+const enhancements = [
+  {
+    id: "move",
+    label: "Move",
+    baseCost: 30,
+  },
+  {
+    id: "attack",
+    label: "Attack",
+    baseCost: 50,
+  },
+  {
+    id: "range",
+    label: "Range",
+    baseCost: 30,
+  },
+  {
+    id: "target",
+    label: "Target",
+    baseCost: 75,
+  },
+  {
+    id: "shield",
+    label: "Shield",
+    baseCost: 80,
+  },
+  {
+    id: "retaliate",
+    label: "Retaliate",
+    baseCost: 60,
+  },
+  {
+    id: "pierce",
+    label: "Pierce",
+    baseCost: 30,
+  },
+  {
+    id: "heal",
+    label: "Heal",
+    baseCost: 30,
+  },
+  {
+    id: "push",
+    label: "Push",
+    baseCost: 30,
+  },
+  {
+    id: "pull",
+    label: "Pull",
+    baseCost: 20,
+  },
+  {
+    id: "teleport",
+    label: "Teleport",
+    baseCost: 50,
+  },
+  {
+    id: "summonHP",
+    label: "Summon HP",
+    icon: "heal",
+    baseCost: 40,
+  },
+  {
+    id: "summonMove",
+    label: "Summon Move",
+    icon: "move",
+    baseCost: 60,
+  },
+  {
+    id: "summonAttack",
+    label: "Summon Attack",
+    icon: "attack",
+    baseCost: 100,
+  },
+  {
+    id: "summonRange",
+    label: "Summon Range",
+    icon: "range",
+    baseCost: 50,
+  },
+  {
+    id: "regenerate",
+    label: "Regenerate",
+    baseCost: 40,
+  },
+  {
+    id: "ward",
+    label: "Ward",
+    baseCost: 75,
+  },
+  {
+    id: "strengthen",
+    label: "Strengthen",
+    baseCost: 100,
+  },
+  {
+    id: "bless",
+    label: "Bless",
+    baseCost: 75,
+  },
+  {
+    id: "wound",
+    label: "Wound",
+    baseCost: 75,
+  },
+  {
+    id: "poison",
+    label: "Poison",
+    baseCost: 50,
+  },
+  {
+    id: "immobilize",
+    label: "Immobilize",
+    baseCost: 150,
+  },
+  {
+    id: "muddle",
+    label: "Muddle",
+    baseCost: 40,
+  },
+  {
+    id: "curse",
+    label: "Curse",
+    baseCost: 150,
+  },
+  {
+    id: "element",
+    label: "Element",
+    baseCost: 100,
+  },
+  {
+    id: "wildElement",
+    label: "Wild Element",
+    baseCost: 150,
+  },
+  {
+    id: "jump",
+    label: "Jump",
+    baseCost: 60,
+  },
+  {
+    id: "areaHex",
+    label: "Area-of-Effect Hex",
+    baseCost: 200,
+  },
+];
 
-const baseCosts = {
-  move: 30,
-  attack: 50,
-  range: 30,
-  target: 75,
-  shield: 80,
-  retaliate: 60,
-  pierce: 30,
-  heal: 30,
-  push: 30,
-  pull: 20,
-  teleport: 50,
-  summonHP: 40,
-  summonMove: 60,
-  summonAttack: 100,
-  summonRange: 50,
-  regenerate: 40,
-  ward: 75,
-  strengthen: 100,
-  bless: 75,
-  wound: 75,
-  poison: 50,
-  immobilize: 150,
-  muddle: 40,
-  curse: 150,
-  element: 100,
-  wildElement: 150,
-  jump: 60,
-  areaHex: 200,
-};
+function init() {
+  const enhancementForm = document.getElementById("enhancementForm");
+  enhancementForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formValues = getFormValues();
+    const calculatedCosts = calculateCosts(formValues);
+    displayCosts(calculatedCosts);
+  });
+}
 
-const enhancementForm = document.getElementById("enhancementForm");
-enhancementForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+function getFormValues() {
+  const enhancerLevel = parseInt(
+    document.getElementById("enhancerLevel").value
+  );
   const cardLevel = parseInt(document.getElementById("cardLevel").value);
   const targets = parseInt(document.getElementById("targets").value);
   const priorEnhancements = parseInt(
     document.getElementById("priorEnhancements").value
   );
-  const persistent = document.getElementById("persistent").checked;
-  const loss = document.getElementById("loss").checked;
-  const enhancerLevel = parseInt(
-    document.getElementById("enhancerLevel").value
-  );
+  const isPersistent = document.getElementById("persistent").checked;
+  const isLoss = document.getElementById("loss").checked;
 
-  const calculatedCosts = Object.keys(enhancements).map((enhancement) => {
-    let cost = baseCosts[enhancement];
-    if (enhancement === "areaHex") {
+  return {
+    enhancerLevel,
+    cardLevel,
+    targets,
+    priorEnhancements,
+    isPersistent,
+    isLoss,
+  };
+}
+
+function calculateCosts({
+  enhancerLevel,
+  cardLevel,
+  targets,
+  priorEnhancements,
+  isPersistent,
+  isLoss,
+}) {
+  return enhancements.map(({ id, label, baseCost, icon }) => {
+    let cost = baseCost;
+    if (id === "areaHex") {
       cost = Math.ceil(cost / targets / 5) * 5;
     }
 
     if (
       targets > 1 &&
-      !["areaHex", "element", "wildElement", "target"].includes(enhancement)
+      !["areaHex", "element", "wildElement", "target"].includes(id)
     ) {
       cost = cost * 2;
     }
-    if (loss && !persistent) {
+    if (isLoss && !isPersistent) {
       cost = cost / 2;
     }
-    if (persistent && !enhancement.startsWith("Summon")) {
+    if (isPersistent && !id.startsWith("summon")) {
       cost = cost * 3;
     }
     const cardLevelCost = enhancerLevel >= 3 ? 15 : 25;
@@ -100,14 +211,13 @@ enhancementForm.addEventListener("submit", (event) => {
       cost = cost - 10;
     }
     return {
-      id: enhancement,
+      id,
       cost,
-      label: enhancements[enhancement],
+      label,
+      icon,
     };
   });
-
-  displayCosts(calculatedCosts);
-});
+}
 
 function displayCosts(costs) {
   const container = document.getElementById("costs");
@@ -118,19 +228,9 @@ function displayCosts(costs) {
   const grid = document.createElement("div");
   grid.classList.add("costs");
 
-  costs.forEach(({ label, cost, id }) => {
+  costs.forEach(({ label, cost, id, icon }) => {
     const iconEl = document.createElement("img");
-    let icon = id;
-    if (id === "summonHP") {
-      icon = "heal";
-    } else if (id === "summonMove") {
-      icon = "move";
-    } else if (id === "summonAttack") {
-      icon = "attack";
-    } else if (id === "summonRange") {
-      icon = "range";
-    }
-    iconEl.src = `/assets/img/${icon}.png`;
+    iconEl.src = `/assets/img/${icon ?? id}.png`;
     iconEl.alt = `Frosthaven icon for ${label}`;
     iconEl.classList.add("enhancementIcon");
 
@@ -149,3 +249,5 @@ function displayCosts(costs) {
 
   container.appendChild(grid);
 }
+
+init();
