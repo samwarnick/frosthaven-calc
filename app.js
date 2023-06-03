@@ -152,7 +152,11 @@ function init() {
     const formValues = getFormValues();
     const calculatedCosts = calculateCosts(formValues);
     displayCosts(calculatedCosts);
+    window.localStorage.setItem("enhancerLevel", formValues.enhancerLevel);
   });
+
+  const existingEnhancerLevel = window.localStorage.getItem("enhancerLevel");
+  document.getElementById("enhancerLevel").value = existingEnhancerLevel ?? "1";
 }
 
 function getFormValues() {
