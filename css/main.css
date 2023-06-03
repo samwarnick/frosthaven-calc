@@ -1,18 +1,18 @@
-.costs {
-    display: grid;
-    grid-template-columns: 30px max-content max-content;
-    gap: 1em;
-    align-items: center;
+#costsTable thead th:first-child {
+    min-width: 250px;
+}
+#costsTable thead th:last-child {
+    width: 100%;
 }
 
 .enhancementIcon {
     height: 30px;
     width: 30px;
     object-fit: contain;
+    margin-right: 1em;
 }
 
-.costLabel {
+.costCell {
     font-weight: bold;
-    justify-self: end;
     font-variant-numeric: tabular-nums;
 }

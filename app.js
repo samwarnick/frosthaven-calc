@@ -149,14 +149,20 @@ function init() {
   const enhancementForm = document.getElementById("enhancementForm");
   enhancementForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    const formValues = getFormValues();
-    const calculatedCosts = calculateCosts(formValues);
-    displayCosts(calculatedCosts);
-    window.localStorage.setItem("enhancerLevel", formValues.enhancerLevel);
+    calculateAndDisplayCosts();
   });
 
   const existingEnhancerLevel = window.localStorage.getItem("enhancerLevel");
   document.getElementById("enhancerLevel").value = existingEnhancerLevel ?? "1";
+
+  calculateAndDisplayCosts();
+}
+
+function calculateAndDisplayCosts() {
+  const formValues = getFormValues();
+  const calculatedCosts = calculateCosts(formValues);
+  displayCosts(calculatedCosts);
+  window.localStorage.setItem("enhancerLevel", formValues.enhancerLevel);
 }
 
 function getFormValues() {
@@ -224,34 +230,39 @@ function calculateCosts({
 }
 
 function displayCosts(costs) {
-  const container = document.getElementById("costs");
-  if (container.firstChild) {
-    container.removeChild(container.firstChild);
+  const table = document.getElementById("costsTable");
+  if (table.firstChild) {
+    table.removeChild(document.getElementById("costsBody"));
   }
 
-  const grid = document.createElement("div");
-  grid.classList.add("costs");
+  const body = document.createElement("tbody");
 
   costs.forEach(({ label, cost, id, icon }) => {
     const iconEl = document.createElement("img");
     iconEl.src = `/assets/img/${icon ?? id}.png`;
     iconEl.alt = `Frosthaven icon for ${label}`;
+    iconEl.setAttribute("aria-hidden", true);
     iconEl.classList.add("enhancementIcon");
 
     const labelEl = document.createElement("span");
     labelEl.textContent = label;
-    labelEl.classList.add("enhancementLabel");
 
-    const costEl = document.createElement("span");
-    costEl.textContent = `${cost} gold`;
-    costEl.classList.add("costLabel");
+    const enhancementCell = document.createElement("th");
+    enhancementCell.appendChild(iconEl);
+    enhancementCell.appendChild(labelEl);
 
-    grid.appendChild(iconEl);
-    grid.appendChild(labelEl);
-    grid.appendChild(costEl);
+    const costCell = document.createElement("td");
+    costCell.textContent = `${cost} gold`;
+    costCell.classList.add("costCell");
+
+    const row = document.createElement("tr");
+    row.appendChild(enhancementCell);
+    row.appendChild(costCell);
+
+    body.appendChild(row);
   });
 
-  container.appendChild(grid);
+  table.appendChild(body);
 }
 
 init();
