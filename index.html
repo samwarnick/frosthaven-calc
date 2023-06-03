@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frosthaven Calculator</title>
+    <link rel="stylesheet" href="css/pico.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <main class="container">
+        <form id="enhancementForm">
+            <label for="enhancerLevel">Enhancer Level</label>
+            <select name="enhancerLevel" id="enhancerLevel">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+
+            <label for="cardLevel">Card Level</label>
+            <select name="cardLevel" id="cardLevel">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+
+            <label for="targets">Targets</label>
+            <input type="number" name="targets" id="targets" min="1" value="1">
+
+            <label for="priorEnhancements">Prior Enhancements</label>
+            <input type="number" name="priorEnhancements" id="priorEnhancements" min="0" value="0">
+
+            <label for="persistent">
+                <input type="checkbox" name="persistent" id="persistent">
+                Persistent
+            </label>
+
+            <label for="Loss">
+                <input type="checkbox" name="loss" id="loss">
+                Loss
+            </label>
+
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="costs"></div>
+    </main>
+    <script src="app.js"></script>
+</body>
+
+</html>

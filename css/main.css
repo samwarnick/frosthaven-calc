@@ -1,0 +1,17 @@
+.costs {
+    display: grid;
+    grid-template-columns: 30px max-content max-content;
+    gap: 1em;
+    align-items: center;
+}
+
+.enhancementIcon {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+}
+
+.costLabel {
+    font-weight: bold;
+    justify-self: end;
+}
