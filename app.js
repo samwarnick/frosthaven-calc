@@ -231,11 +231,10 @@ function calculateCosts({
 
 function displayCosts(costs) {
   const table = document.getElementById("costsTable");
-  if (table.firstChild) {
-    table.removeChild(document.getElementById("costsBody"));
-  }
+  table.removeChild(document.getElementById("costsBody"));
 
   const body = document.createElement("tbody");
+  body.id = "costsBody";
 
   costs.forEach(({ label, cost, id, icon }) => {
     const iconEl = document.createElement("img");
