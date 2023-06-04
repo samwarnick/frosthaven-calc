@@ -145,49 +145,7 @@ const enhancements = [
   },
 ];
 
-function init() {
-  const enhancementForm = document.getElementById("enhancementForm");
-  enhancementForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    calculateAndDisplayCosts();
-  });
-
-  const existingEnhancerLevel = window.localStorage.getItem("enhancerLevel");
-  document.getElementById("enhancerLevel").value = existingEnhancerLevel ?? "1";
-
-  calculateAndDisplayCosts();
-}
-
-function calculateAndDisplayCosts() {
-  const formValues = getFormValues();
-  const calculatedCosts = calculateCosts(formValues);
-  displayCosts(calculatedCosts);
-  window.localStorage.setItem("enhancerLevel", formValues.enhancerLevel);
-}
-
-function getFormValues() {
-  const enhancerLevel = parseInt(
-    document.getElementById("enhancerLevel").value
-  );
-  const cardLevel = parseInt(document.getElementById("cardLevel").value);
-  const targets = parseInt(document.getElementById("targets").value);
-  const priorEnhancements = parseInt(
-    document.getElementById("priorEnhancements").value
-  );
-  const isPersistent = document.getElementById("persistent").checked;
-  const isLoss = document.getElementById("loss").checked;
-
-  return {
-    enhancerLevel,
-    cardLevel,
-    targets,
-    priorEnhancements,
-    isPersistent,
-    isLoss,
-  };
-}
-
-function calculateCosts({
+function _calculateCosts({
   enhancerLevel,
   cardLevel,
   targets,
@@ -224,45 +182,38 @@ function calculateCosts({
       id,
       cost,
       label,
-      icon,
+      icon: `/assets/img/${icon ?? id}.png`,
+      altText: `Frosthaven icon for ${label}`,
     };
   });
 }
 
-function displayCosts(costs) {
-  const table = document.getElementById("costsTable");
-  table.removeChild(document.getElementById("costsBody"));
-
-  const body = document.createElement("tbody");
-  body.id = "costsBody";
-
-  costs.forEach(({ label, cost, id, icon }) => {
-    const iconEl = document.createElement("img");
-    iconEl.src = `/assets/img/${icon ?? id}.png`;
-    iconEl.alt = `Frosthaven icon for ${label}`;
-    iconEl.setAttribute("aria-hidden", true);
-    iconEl.classList.add("enhancementIcon");
-
-    const labelEl = document.createElement("span");
-    labelEl.textContent = label;
-
-    const enhancementCell = document.createElement("th");
-    enhancementCell.setAttribute("scope", "row");
-    enhancementCell.appendChild(iconEl);
-    enhancementCell.appendChild(labelEl);
-
-    const costCell = document.createElement("td");
-    costCell.textContent = `${cost} gold`;
-    costCell.classList.add("costCell");
-
-    const row = document.createElement("tr");
-    row.appendChild(enhancementCell);
-    row.appendChild(costCell);
-
-    body.appendChild(row);
+document.addEventListener("alpine:init", () => {
+  Alpine.store("costs", {
+    calculated: null,
+    calculateCosts(formValues) {
+      this.calculated = [..._calculateCosts(formValues)];
+    },
   });
 
-  table.appendChild(body);
-}
-
-init();
+  const enhancerLevel = window.localStorage.getItem("enhancerLevel") ?? 1;
+  Alpine.data("form", () => ({
+    enhancerLevel,
+    cardLevel: 1,
+    targets: 1,
+    priorEnhancements: 0,
+    isPersistent: false,
+    isLoss: false,
+    submit() {
+      Alpine.store("costs").calculateCosts({
+        enhancerLevel: this.enhancerLevel,
+        cardLevel: this.cardLevel,
+        targets: this.targets,
+        priorEnhancements: this.priorEnhancements,
+        isPersistent: this.isPersistent,
+        isLoss: this.isLoss,
+      });
+      window.localStorage.setItem("enhancerLevel", this.enhancerLevel);
+    },
+  }));
+});

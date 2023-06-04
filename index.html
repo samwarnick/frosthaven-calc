@@ -8,13 +8,14 @@
     <title>Frosthaven Calculator</title>
     <link rel="stylesheet" href="css/pico.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
 </head>
 
 <body>
     <main class="container">
-        <form id="enhancementForm">
+        <form id="enhancementForm" x-data="form" @submit.prevent="submit()">
             <label for="enhancerLevel">Enhancer Level</label>
-            <select name="enhancerLevel" id="enhancerLevel" value="">
+            <select name="enhancerLevel" id="enhancerLevel" x-model.number="enhancerLevel">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -22,7 +23,7 @@
             </select>
 
             <label for="cardLevel">Card Level</label>
-            <select name="cardLevel" id="cardLevel">
+            <select name="cardLevel" id="cardLevel" x-model.number="cardLevel">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -35,32 +36,46 @@
             </select>
 
             <label for="targets">Targets</label>
-            <input type="number" name="targets" id="targets" min="1" value="1">
+            <input type="number" name="targets" id="targets" min="1" value="1" x-model.number="targets">
 
             <label for="priorEnhancements">Prior Enhancements</label>
-            <input type="number" name="priorEnhancements" id="priorEnhancements" min="0" value="0">
+            <input type="number" name="priorEnhancements" id="priorEnhancements" min="0" value="0"
+                x-model.number="priorEnhancements">
 
             <label for="persistent">
-                <input type="checkbox" name="persistent" id="persistent">
+                <input type="checkbox" name="persistent" id="persistent" x-model="isPersistent">
                 Persistent
             </label>
 
             <label for="Loss">
-                <input type="checkbox" name="loss" id="loss">
+                <input type="checkbox" name="loss" id="loss" x-model="isLoss">
                 Loss
             </label>
 
             <button type="submit">Calculate</button>
         </form>
-        <table id="costsTable" aria-label="Enhancement Costs" role="grid">
-            <thead>
-                <tr>
-                    <th scope="col">Enhancement</th>
-                    <th scope="col">Cost</th>
-                </tr>
-            </thead>
-            <tbody id="costsBody"></tbody>
-        </table>
+        <template x-data="$store.costs" x-if="calculated">
+            <table id="costsTable" aria-label="Enhancement Costs" role="grid">
+                <thead>
+                    <tr>
+                        <th scope="col">Enhancement</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="enhancement in $store.costs.calculated">
+                        <tr>
+                            <th scope="row">
+                                <img class="enhancementIcon" x-bind:src="enhancement.icon"
+                                    x-bind:alt="enhancement.altText">
+                                <span x-text="enhancement.label"></span>
+                            </th>
+                            <td class="costCell"><span x-text="enhancement.cost"></span> gold</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
     </main>
     <script src="app.js"></script>
 </body>
