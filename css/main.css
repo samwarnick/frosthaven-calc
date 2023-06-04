@@ -1,3 +1,14 @@
+@font-face {
+    font-family: "PirataOne";
+    src: url("/assets/fonts/PirataOne-Gloomhaven.ttf");
+}
+
+:root {
+    --font-family: "PirataOne", system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu",
+    "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 #costsTable {
     width: auto;
 }
