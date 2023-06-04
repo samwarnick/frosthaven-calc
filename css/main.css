@@ -9,8 +9,15 @@
     "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+#enhancementForm button[type="submit"] {
+    max-width: 260px;
+    margin-top: 1em;
+    margin-inline: auto;
+}
+
 #costsTable {
     width: auto;
+    margin-inline: auto;
 }
 
 .enhancementIcon {
