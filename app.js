@@ -196,9 +196,8 @@ document.addEventListener("alpine:init", () => {
     },
   });
 
-  const enhancerLevel = window.localStorage.getItem("enhancerLevel") ?? 1;
   Alpine.data("form", () => ({
-    enhancerLevel,
+    enhancerLevel: Alpine.$persist(1),
     cardLevel: 1,
     targets: 1,
     priorEnhancements: 0,
@@ -213,7 +212,6 @@ document.addEventListener("alpine:init", () => {
         isPersistent: this.isPersistent,
         isLoss: this.isLoss,
       });
-      window.localStorage.setItem("enhancerLevel", this.enhancerLevel);
     },
   }));
 });
