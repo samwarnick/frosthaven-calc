@@ -67,8 +67,7 @@
                     <template x-for="enhancement in $store.costs.calculated">
                         <tr>
                             <th scope="row">
-                                <img class="enhancementIcon" x-bind:src="enhancement.icon"
-                                    x-bind:alt="enhancement.altText">
+                                <img class="enhancementIcon" :src="enhancement.icon" :alt="enhancement.altText">
                                 <span x-text="enhancement.label"></span>
                             </th>
                             <td class="costCell"><span x-text="enhancement.cost"></span> gold</td>
