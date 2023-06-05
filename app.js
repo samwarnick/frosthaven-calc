@@ -197,18 +197,11 @@ document.addEventListener("alpine:init", () => {
   });
 
   Alpine.data("form", () => ({
-    values: {
-      enhancerLevel: Alpine.$persist(1),
-      cardLevel: 1,
-      targets: 1,
-      priorEnhancements: 0,
-      isPersistent: false,
-      isLoss: false,
-    },
-    submit() {
-      Alpine.store("costs").calculateCosts({
-        ...this.values,
-      });
-    },
+    enhancerLevel: Alpine.$persist(1),
+    cardLevel: 1,
+    targets: 1,
+    priorEnhancements: 0,
+    isPersistent: false,
+    isLoss: false,
   }));
 });
