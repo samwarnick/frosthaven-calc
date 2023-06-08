@@ -263,12 +263,12 @@ document.addEventListener("alpine:init", () => {
       if (markType === "all") {
         this.filtered = calculated;
       } else if (markType === "hex") {
-        this.filtered = calculated.filter((cost) => {
+        this.filtered = this.calculated.filter((cost) => {
           return cost.markType === "hex";
         });
       } else {
         const selectedTypeLevel = markTypeLevels[markType];
-        this.filtered = calculated.filter((cost) => {
+        this.filtered = this.calculated.filter((cost) => {
           const level = markTypeLevels[cost.markType];
           return level <= selectedTypeLevel;
         });

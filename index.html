@@ -63,7 +63,7 @@
         <div x-data="$store.costs">
             <label for="markType">Mark Type</label>
             <select name="markType" id="markType" x-model="markType" :disabled="!calculated"
-                x-init="$watch('markType', (markType) => filterCosts(markType, $data.calculated))">
+                x-init="$watch('markType', (markType) => filterCosts(markType))">
                 <template x-for="markType in markTypes">
                     <option x-text="markType.label" :value="markType.id"></option>
                 </template>
