@@ -14,47 +14,51 @@
 
 <body>
     <main class="container">
-        <form id="enhancementForm" x-data="form" @submit.prevent="$store.costs.calculateCosts($data)">
-            <label for="enhancerLevel">Enhancer Level</label>
-            <select name="enhancerLevel" id="enhancerLevel" x-model.number="enhancerLevel">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
+        <details open>
+            <summary>Card Properties</summary>
+            <form id="enhancementForm" x-data="form" @submit.prevent="$store.costs.calculateCosts($data)">
+                <label for="enhancerLevel">Enhancer Level</label>
+                <select name="enhancerLevel" id="enhancerLevel" x-model.number="enhancerLevel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
 
-            <label for="cardLevel">Card Level</label>
-            <select name="cardLevel" id="cardLevel" x-model.number="cardLevel">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
+                <label for="cardLevel">Card Level</label>
+                <select name="cardLevel" id="cardLevel" x-model.number="cardLevel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
 
-            <label for="targets">Targets</label>
-            <input type="number" name="targets" id="targets" min="1" value="1" x-model.number="targets">
+                <label for="targets">Targets</label>
+                <input type="number" name="targets" id="targets" min="1" value="1" x-model.number="targets">
 
-            <label for="priorEnhancements">Prior Enhancements</label>
-            <input type="number" name="priorEnhancements" id="priorEnhancements" min="0" value="0"
-                x-model.number="priorEnhancements">
+                <label for="priorEnhancements">Prior Enhancements</label>
+                <input type="number" name="priorEnhancements" id="priorEnhancements" min="0" value="0"
+                    x-model.number="priorEnhancements">
 
-            <label for="persistent">
-                <input type="checkbox" name="persistent" id="persistent" x-model="isPersistent">
-                Persistent
-            </label>
+                <label for="persistent">
+                    <input type="checkbox" name="persistent" id="persistent" x-model="isPersistent">
+                    Persistent
+                </label>
 
-            <label for="Loss">
-                <input type="checkbox" name="loss" id="loss" x-model="isLoss">
-                Loss
-            </label>
+                <label for="Loss">
+                    <input type="checkbox" name="loss" id="loss" x-model="isLoss">
+                    Loss
+                </label>
 
-            <button type="submit">Calculate</button>
-        </form>
+                <button type="submit">Calculate</button>
+            </form>
+        </details>
+
 
         <div x-data="$store.costs">
             <label for="markType">Mark Type</label>
