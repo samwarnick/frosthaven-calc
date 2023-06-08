@@ -55,27 +55,37 @@
 
             <button type="submit">Calculate</button>
         </form>
-        <template x-data="$store.costs" x-if="calculated">
-            <table id="costsTable" aria-label="Enhancement Costs" role="grid">
-                <thead>
-                    <tr>
-                        <th scope="col">Enhancement</th>
-                        <th scope="col">Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template x-for="enhancement in $store.costs.calculated">
+
+        <div x-data="$store.costs">
+            <label for="markType">Mark Type</label>
+            <select name="markType" id="markType" x-model="markType" :disabled="!calculated"
+                x-init="$watch('markType', (markType) => filterCosts(markType, $data.calculated))">
+                <template x-for="markType in markTypes">
+                    <option x-text="markType.label" :value="markType.id"></option>
+                </template>
+            </select>
+            <template x-if="filtered">
+                <table id="costsTable" aria-label="Enhancement Costs" role="grid">
+                    <thead>
                         <tr>
-                            <th scope="row">
-                                <img class="enhancementIcon" :src="enhancement.icon" :alt="enhancement.altText">
-                                <span x-text="enhancement.label"></span>
-                            </th>
-                            <td class="costCell"><span x-text="enhancement.cost"></span> gold</td>
+                            <th scope="col">Enhancement</th>
+                            <th scope="col">Cost</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-        </template>
+                    </thead>
+                    <tbody>
+                        <template x-for="enhancement in filtered">
+                            <tr>
+                                <th scope="row">
+                                    <img class="enhancementIcon" :src="enhancement.icon" :alt="enhancement.altText">
+                                    <span x-text="enhancement.label"></span>
+                                </th>
+                                <td class="costCell"><span x-text="enhancement.cost"></span> gold</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
     </main>
     <script src="app.js"></script>
 </body>
